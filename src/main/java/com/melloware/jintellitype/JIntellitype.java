@@ -235,7 +235,7 @@ public final class JIntellitype implements JIntellitypeConstants {
          if (modifiers == 0) {
             modifiers = modifier;
          }
-         regHotKey(identifier, modifier, keycode);
+         regHotKey(identifier, modifiers, keycode);
       } catch (UnsatisfiedLinkError ex) {
          throw new JIntellitypeException(ERROR_MESSAGE, ex);
       } catch (RuntimeException ex) {
@@ -279,19 +279,19 @@ public final class JIntellitype implements JIntellitypeConstants {
       int mask = 0;
       int keycode = 0;
 
-      for (int i = 0; i < split.length; i++) {
-         if ("ALT".equalsIgnoreCase(split[i])) {
-            mask += JIntellitype.MOD_ALT;
-         } else if ("CTRL".equalsIgnoreCase(split[i]) || "CONTROL".equalsIgnoreCase(split[i])) {
-            mask += JIntellitype.MOD_CONTROL;
-         } else if ("SHIFT".equalsIgnoreCase(split[i])) {
-            mask += JIntellitype.MOD_SHIFT;
-         } else if ("WIN".equalsIgnoreCase(split[i])) {
-            mask += JIntellitype.MOD_WIN;
-         } else if (keycodeMap.containsKey(split[i].toLowerCase())) {
-            keycode = keycodeMap.get(split[i].toLowerCase());
-         }
-      }
+	   for (String aSplit : split) {
+		   if ("ALT".equalsIgnoreCase(aSplit)) {
+			   mask += JIntellitype.MOD_ALT;
+		   } else if ("CTRL".equalsIgnoreCase(aSplit) || "CONTROL".equalsIgnoreCase(aSplit)) {
+			   mask += JIntellitype.MOD_CONTROL;
+		   } else if ("SHIFT".equalsIgnoreCase(aSplit)) {
+			   mask += JIntellitype.MOD_SHIFT;
+		   } else if ("WIN".equalsIgnoreCase(aSplit)) {
+			   mask += JIntellitype.MOD_WIN;
+		   } else if (keycodeMap.containsKey(aSplit.replaceAll(" ", "_").toLowerCase())) {
+			   keycode = keycodeMap.get(aSplit.replaceAll(" ", "_").toLowerCase());
+		   }
+	   }
       registerHotKey(identifier, mask, keycode);
    }
 
@@ -504,7 +504,7 @@ public final class JIntellitype implements JIntellitypeConstants {
       map.put("minus", 109);
       map.put("period", 110);
       map.put("slash", 191);
-      map.put("accent `", 192);
+      map.put("accent", 192);
       map.put("0", KeyEvent.VK_0);
       map.put("1", KeyEvent.VK_1);
       map.put("2", KeyEvent.VK_2);
