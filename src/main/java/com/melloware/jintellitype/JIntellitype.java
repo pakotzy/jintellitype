@@ -235,7 +235,7 @@ public final class JIntellitype implements JIntellitypeConstants {
          if (modifiers == 0) {
             modifiers = modifier;
          }
-         regHotKey(identifier, modifiers, keycode);
+         regHotKey(identifier, modifier, keycode);
       } catch (UnsatisfiedLinkError ex) {
          throw new JIntellitypeException(ERROR_MESSAGE, ex);
       } catch (RuntimeException ex) {
@@ -269,13 +269,13 @@ public final class JIntellitype implements JIntellitypeConstants {
     * and/or WIN.
     * <p>
     * @param identifier a unique identifier for this key combination
-    * @param modifierAndKeyCode String with modifiers separated by + and keycode
+    * @param modifierAndKeyCode String with modifiers separated by '+' and keycode
     *           (e.g. CTRL+SHIFT+A)
     * @see #registerHotKey(int, int, int)
     * @see #registerSwingHotKey(int, int, int)
     */
    public void registerHotKey(int identifier, String modifierAndKeyCode) {
-      String[] split = modifierAndKeyCode.split("\\+");
+      String[] split = modifierAndKeyCode.split("\\+(?=.)");
       int mask = 0;
       int keycode = 0;
 
